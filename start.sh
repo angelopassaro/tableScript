@@ -57,8 +57,10 @@ function initialize() {
     then
         echo "Insert directory"
         read directory
+        echo "Insert output file"
+        read file
         
-        initialize $directory $2
+        initialize $directory $file
     else
         echo "closed"
         return 1
