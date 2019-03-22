@@ -1,21 +1,33 @@
 #!/bin/bash
 function initialize() {
+    
     inpath=$(readlink -f $1)
     outpath=$(readlink -f $2)
     
     files=()
-    # take all directories from input directory
-    for dir in $inpath/*/
-    do
-        dir=${dir%*/}
-        extension=${dir##/*/}
+    
+    # TODO change for photorec
+    if [[ "${inpath##*/}" = 'recup_dir.1' ]]
+    then
+        files+=("$outpath.photorec")
+        mv $inpath/report.xml $HOME
+        compute $inpath "photorec"
+        mv $HOME/report.xml $inpath
+    else
         
-        files+=("$outpath.$extension")
-        
-        compute $dir $extension &
-        
-    done
-    wait
+        # take all directories from input directory
+        for dir in $inpath/*/
+        do
+            dir=${dir%*/}
+            extension=${dir##/*/}
+            
+            files+=("$outpath.$extension")
+            
+            compute $dir $extension &
+            
+        done
+        wait
+    fi
     
     # merge all files
     for file in "${files[@]}"
