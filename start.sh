@@ -41,6 +41,15 @@ function initialize() {
     #sort records by type
     sort -k 2 $outpath -o $outpath
     
+    #Full merge of files
+    result=$(dirname "$outpath")
+    result=$result"/result.txt"
+    
+    sort -u -k 1,1 $outpath -o $result
+    sort -k 2 $result -o $result
+    
+    
+    
     echo "Start new directory?(y\n)"
     read decision
     
