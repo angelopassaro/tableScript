@@ -38,17 +38,20 @@ function initialize() {
         rm $file
     done
     
-    # clear duplicate
+    # clear duplicate single file
     sort -u -k 1,1 $outpath -o $outpath
-    #sort records by type
+    #sort records by type single file
     sort -k 2 $outpath -o $outpath
     
     #Full merge of files
-    result=$(dirname "$outpath")
-    result=$result"/result.txt"
     
-    sort -u -k 1,1 $outpath -o $result
-    sort -k 2 $result -o $result
+    #result=$(dirname "$outpath")
+    #result=$result"/result.txt"
+    cat $outpath >> result.txt
+    
+    # clear in duplicate file
+    sort -u -k 1,1 result.txt -o result.txt
+    sort -k 2 result.txt -o result.txt
     
     
     
@@ -90,9 +93,9 @@ else
     
     echo -e 'MD5\tFOREMOST\tSCALPEL\tPHOTOREC\tTYPE\tDIMENSION' >> table.txt
     
-    gawk 'FNR==NR{a[$1]="YES";next}{print $1, a[$1]?a[$1]:"NO", "\t" $2 "\t" $3}' $(readlink -f foremost.txt) result.txt >> tmp.txt
-    gawk 'FNR==NR{a[$1]="YES";next}{print $1 "\t" $2 "\t" ,a[$1]?a[$1]:"NO", "\t"  $3 "\t"  $4}' $(readlink -f  scalpel.txt) tmp.txt >> tmp2.txt
-    gawk 'FNR==NR{a[$1]="YES";next}{print $1 "\t" $2 "\t" $3 "\t" ,a[$1]?a[$1]:"NO", "\t"  $4 "\t"  $5}' $(readlink -f photorec.txt) tmp2.txt >> table.txt
+    gawk 'FNR==NR{a[$1]="YES";next}{print $1, a[$1]?a[$1]:"NO", "\t" $2 "\t" $3}' foremost.txt result.txt >> tmp.txt
+    gawk 'FNR==NR{a[$1]="YES";next}{print $1 "\t" $2 "\t" ,a[$1]?a[$1]:"NO", "\t"  $3 "\t"  $4}' scalpel.txt tmp.txt >> tmp2.txt
+    gawk 'FNR==NR{a[$1]="YES";next}{print $1 "\t" $2 "\t" $3 "\t" ,a[$1]?a[$1]:"NO", "\t"  $4 "\t"  $5}' photorec.txt tmp2.txt >> table.txt
     
     rm tmp.txt tmp2.txt
 fi
