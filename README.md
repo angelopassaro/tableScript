@@ -2,7 +2,7 @@ Script created for Digital forensics course 's exercises.
 
 Generate a table for check which tool have restored the file
 
-#Usage
+# Usage
 . start.sh directory file.txt
 
 directory = directory generate by foremost(output)/scalpel(scalpel-output)/photorec(recup_dir.1)
@@ -11,7 +11,7 @@ file = file where save the information generate from the single tool foremost.tx
 output = result.txt and table.txt
 
 
-#Example 
+# Example 
 table.csv
 
 |MD5|Foremost|Scalpel|Photorec|Type|Dimension|
