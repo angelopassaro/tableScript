@@ -91,11 +91,11 @@ then
 else
     initialize $1 $2
     
-    echo -e 'MD5\tFOREMOST\tSCALPEL\tPHOTOREC\tTYPE\tDIMENSION' >> table.txt
+    echo -e 'MD5\tFOREMOST\tSCALPEL\tPHOTOREC\tTYPE\tDIMENSION' >> table.csv
     
     gawk 'FNR==NR{a[$1]="YES";next}{print $1, a[$1]?a[$1]:"NO", "\t" $2 "\t" $3}' foremost.txt result.txt >> tmp.txt
     gawk 'FNR==NR{a[$1]="YES";next}{print $1 "\t" $2 "\t" ,a[$1]?a[$1]:"NO", "\t"  $3 "\t"  $4}' scalpel.txt tmp.txt >> tmp2.txt
-    gawk 'FNR==NR{a[$1]="YES";next}{print $1 "\t" $2 "\t" $3 "\t" ,a[$1]?a[$1]:"NO", "\t"  $4 "\t"  $5}' photorec.txt tmp2.txt >> table.txt
+    gawk 'FNR==NR{a[$1]="YES";next}{print $1 "\t" $2 "\t" $3 "\t" ,a[$1]?a[$1]:"NO", "\t"  $4 "\t"  $5}' photorec.txt tmp2.txt >> table.csv
     
     rm tmp.txt tmp2.txt
 fi
